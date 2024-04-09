@@ -104,7 +104,8 @@ class LoginScreen extends StatelessWidget {
                                     usernameController.text,
                                     passwordControler.text);
                                 if (isLoged) {
-                                  nuvigator!.open('home');
+                                  nuvigator!.open('home',
+                                      parameters: {"id": instance.userId});
                                 }
                                 usernameController.clear();
                               },

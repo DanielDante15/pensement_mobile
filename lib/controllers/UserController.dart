@@ -21,4 +21,17 @@ class UserController extends UrlEnviroment {
       throw 'Error while retrieving data';
     });
   }
+
+  Future<http.Response> getUser(
+      {required String token, required String id}) async {
+    return await http.get(
+      Uri.parse('${super.env}/user/$id'),
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    ).timeout(const Duration(seconds: 30), onTimeout: () {
+      throw 'Error while retrieving data';
+    });
+  }
 }

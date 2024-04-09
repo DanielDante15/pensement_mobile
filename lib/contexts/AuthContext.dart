@@ -11,6 +11,7 @@ class AuthContext extends ChangeNotifier {
   static AuthContext service = AuthContext();
 
   var isLoading = false;
+  var userId = '';
   var isAuth = false;
   var error = false;
 
@@ -33,6 +34,7 @@ class AuthContext extends ChangeNotifier {
   }
 
   validateToken() async {
+    isAuth = false;
     String? recoveredToken = await getToken();
     try {
       Map<String, dynamic> decodedToken =
@@ -47,8 +49,10 @@ class AuthContext extends ChangeNotifier {
         }
       }
     } catch (e) {
+      isAuth = false;
       notifyListeners();
     }
+
     notifyListeners();
   }
 
@@ -64,6 +68,11 @@ class AuthContext extends ChangeNotifier {
         Map<String, dynamic> resBody =
             jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
         setToken(resBody['token']);
+        Map<String, dynamic> decodedToken =
+            JwtDecoder.decode(resBody['token'].toString());
+        if (decodedToken.containsKey('sub')) {
+          userId = decodedToken['sub'];
+        }
         isLoading = false;
         notifyListeners();
         return true;
