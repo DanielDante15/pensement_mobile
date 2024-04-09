@@ -47,11 +47,8 @@ class TokenContext extends ChangeNotifier {
         }
       }
     } catch (e) {
-      print("linha 47");
-      // removeToken();
       notifyListeners();
     }
-    print("linha 51");
     notifyListeners();
   }
 
@@ -62,6 +59,7 @@ class TokenContext extends ChangeNotifier {
       await Future.delayed(const Duration(seconds: 2));
 
       var response = await api.login(username, password);
+
       if (response.statusCode == 200) {
         Map<String, dynamic> resBody =
             jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
