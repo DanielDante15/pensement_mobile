@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:pensement_mobile/components/SnackBar/snacknbar.dart';
-import 'package:pensement_mobile/controllers/login_controller.dart';
+import 'package:pensement_mobile/controllers/LoginController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TokenContext extends ChangeNotifier {
+class AuthContext extends ChangeNotifier {
   final LoginController api = LoginController();
-  static TokenContext service = TokenContext();
+  static AuthContext service = AuthContext();
 
   var isLoading = false;
   var isAuth = false;
@@ -19,9 +19,9 @@ class TokenContext extends ChangeNotifier {
     await prefs.setString('token', stoken);
   }
 
-  Future<String?> getToken() async {
+  Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    return prefs.getString('token') ?? '';
   }
 
   Future<void> removeToken() async {

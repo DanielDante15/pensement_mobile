@@ -1,7 +1,7 @@
 import 'package:pensement_mobile/components/Button/button.dart';
 import 'package:pensement_mobile/components/Button/link_button.dart';
 import 'package:pensement_mobile/components/TextField/textfield.dart';
-import 'package:pensement_mobile/contexts/token_context.dart';
+import 'package:pensement_mobile/contexts/AuthContext.dart';
 import 'package:pensement_mobile/validators/email_validator.dart';
 import 'package:pensement_mobile/validators/password_validator.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final instance = TokenContext.service;
+    final instance = AuthContext.service;
     final nuvigator = Nuvigator.of(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -51,21 +51,15 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                          padding: EdgeInsets.only(bottom: 6),
-                          child: Text('Email')),
                       BTextField(
+                        title: 'Email',
                         validator: (value) => emailValidator(value),
                         keyboardType: TextInputType.emailAddress,
                         controller: usernameController,
                         hintText: 'Insert your email',
                       ),
-                      const SizedBox(height: 15),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 6),
-                        child: Text('Password'),
-                      ),
                       BTextField(
+                        title: 'Password',
                         validator: (value) => passwordValidator(value),
                         controller: passwordControler,
                         isObscure: true,
@@ -81,7 +75,8 @@ class LoginScreen extends StatelessWidget {
                               text: "I don't have an account",
                               color: Colors.black,
                               fontSize: 14,
-                              onTap: () => nuvigator!.open('sign-up'),
+                              onTap: () =>
+                                  nuvigator!.pushReplacementNamed('sign-up'),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
@@ -111,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                                 if (isLoged) {
                                   nuvigator!.open('home');
                                 }
+                                usernameController.clear();
                               },
                               text: 'Login',
                             );

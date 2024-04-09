@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nuvigator/next.dart';
 import 'package:pensement_mobile/components/Button/button.dart';
-import 'package:pensement_mobile/contexts/token_context.dart';
+import 'package:pensement_mobile/contexts/AuthContext.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen>
                   const Center(child: Text("Tela1")),
                   BButton(
                       onPress: () {
-                        final instance = TokenContext.service;
+                        final instance = AuthContext.service;
                         instance.removeToken();
                         nuvigator!.pushReplacementNamed('login');
                       },

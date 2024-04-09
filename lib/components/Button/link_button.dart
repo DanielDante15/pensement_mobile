@@ -8,10 +8,12 @@ class BLinkButton extends StatelessWidget {
       required this.onTap,
       required this.fontSize,
       required this.color,
-      this.fontWeight});
+      this.fontWeight,
+      this.decoration});
   final String text;
   final double fontSize;
   final Color color;
+  final TextDecoration? decoration;
   final FontWeight? fontWeight;
   final void Function() onTap;
 
@@ -21,6 +23,7 @@ class BLinkButton extends StatelessWidget {
       text: TextSpan(
           text: text,
           style: TextStyle(
+            decoration: decoration ?? TextDecoration.none,
             color: color,
             fontSize: fontSize,
             fontWeight: fontWeight ?? FontWeight.w400,
